@@ -47,8 +47,8 @@ class GoForward():
 
     move_stop = Twist()
 
-safety('GoFwd','Wait','Stop')
-bhit('none','left','right','center')
+safety{'GoFwd','Wait','Stop'}
+bhit{'none','left','right','center'}
 	# as long as you haven't ctrl + c keeping doing...
     while not rospy.is_shutdown():
 	    # publish the velocity
