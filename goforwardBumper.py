@@ -51,7 +51,7 @@ safety = ["GoFwd","Wait","Stop"]
 bhit = ["none","left","right","center"]
 	# as long as you haven't ctrl + c keeping doing...
     while not rospy.is_shutdown():
-        safety = 'GoFwd'
+        safety = 'GoFwd';
 	    # publish the velocity
         if safety == 'GoFwd':
             self.cmd_vel.publish(move_cmd)
