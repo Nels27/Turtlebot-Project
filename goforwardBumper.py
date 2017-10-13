@@ -18,6 +18,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import rospy
 from geometry_msgs.msg import Twist
+from kobuki_msgs.msg import BumperEvent
 
 class GoForward():
     def __init__(self):
@@ -36,21 +37,38 @@ class GoForward():
 
 	#TurtleBot will stop if we don't keep telling it to move.  How often should we tell it to move? 10 HZ
         r = rospy.Rate(10);
-
-        # Twist is a datatype for velocity
+        f = rospy.Rate(0.5);
+        # Twist is a datatype for velocity (All the motions of the robot)
         move_cmd = Twist()
-	# let's go forward at 0.2 m/s
-        move_cmd.linear.x = 0.2
+	# let's go forward at 0.1 m/s
+        move_cmd.linear.x = 0.1
 	# let's turn at 0 radians/s
 	move_cmd.angular.z = 0
 
+    move_stop = Twist()
+
+safety('GoFwd','Wait','Stop')
+bhit('none','left','right','center')
 	# as long as you haven't ctrl + c keeping doing...
         while not rospy.is_shutdown():
 	    # publish the velocity
+        if safety == 'GoFwd':
             self.cmd_vel.publish(move_cmd)
-	    # wait for 0.1 seconds (10 HZ) and publish again
-            r.sleep()
 
+            if (data.state == BumperEvent.PRESSED):
+                safety = 'Wait'
+
+        elif safety == 'Wait':
+            self.cmd_vel.publish(move_stop)
+            if (data.state == BumperEvent.Release):
+                safety = 'Stop'
+                else
+                safety = 'Wait'
+
+        elif safety == 'Stop':
+            f.sleep() #Stops it for 2 seconds
+            safety ='GoFwd'
+	    # wait for 0.1 seconds (10 HZ) and publish again
 
     def shutdown(self):
         # stop turtlebot

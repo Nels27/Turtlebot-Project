@@ -41,12 +41,12 @@
 
 import roslib
 import rospy
-from kobuki_msgs.msg import ButtonEvent
+
 
 class kobuki_button():
 
 	def __init__(self):
-		rospy.init_node("kobuki_button")		
+		rospy.init_node("kobuki_button")
 
 		#monitor kobuki's button events
 		rospy.Subscriber("/mobile_base/events/button",ButtonEvent,self.ButtonEventCallback)
@@ -55,12 +55,12 @@ class kobuki_button():
 		rospy.spin();
 
 
-	
+
 	def ButtonEventCallback(self,data):
 	    if ( data.state == ButtonEvent.RELEASED ) :
 		state = "released"
 	    else:
-		state = "pressed"  
+		state = "pressed"
 	    if ( data.button == ButtonEvent.Button0 ) :
 		button = "B0"
 	    elif ( data.button == ButtonEvent.Button1 ) :
@@ -68,7 +68,7 @@ class kobuki_button():
 	    else:
 		button = "B2"
 	    rospy.loginfo("Button %s was %s."%(button, state))
-	
+
 
 if __name__ == '__main__':
 	try:
