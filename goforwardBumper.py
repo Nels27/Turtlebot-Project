@@ -62,7 +62,7 @@ bhit('none','left','right','center')
             self.cmd_vel.publish(move_stop)
             if (data.state == BumperEvent.Release):
                 safety = 'Stop'
-                else
+            else:
                 safety = 'Wait'
 
         elif safety == 'Stop':
