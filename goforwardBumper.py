@@ -22,6 +22,7 @@ from kobuki_msgs.msg import BumperEvent
 
 class GoForward():
     def __init__(self):
+        self.safety = 'GoFwd'
         # initiliaze
         rospy.init_node('GoForward', anonymous=False)
 
@@ -47,7 +48,7 @@ class GoForward():
 
     move_stop = Twist()
 
-safety = ["GoFwd","Wait","Stop"]
+safety =
 bhit = ["none","left","right","center"]
 	# as long as you haven't ctrl + c keeping doing...
     while not rospy.is_shutdown():
