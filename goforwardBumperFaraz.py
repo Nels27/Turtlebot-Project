@@ -22,6 +22,8 @@ from kobuki_msgs.msg import BumperEvent
 
 class GoForward():
     def __init__(self):
+        self.safety = safety;
+        safety = 0
         # initiliaze
         rospy.init_node('GoForward', anonymous=False)
         rospy.Subscriber("/mobile_base/events/bumper",BumperEvent,self.BumperEventCallback)
@@ -39,7 +41,7 @@ class GoForward():
 	#TurtleBot will stop if we don't keep telling it to move.  How often should we tell it to move? 10 HZ
         r = rospy.Rate(10);
         f = rospy.Rate(0.5);
-        self.self.safety = 0;
+        self.safety = 0;
         # Twist is a datatype for velocity (All the motions of the robot)
         move_cmd = Twist()
 	# let's go forward at 0.1 m/s
@@ -49,11 +51,11 @@ class GoForward():
 
     move_stop = Twist()
 
-    #self.safety 
+    #safety
     # GoFwd = 0
     # Wait = 1
     # Stop = 2
-    #self.safety = ["GoFwd","Wait","Stop"]
+    #safety = ["GoFwd","Wait","Stop"]
     #bhit
     # None = 0
     # left = 1
@@ -64,19 +66,19 @@ class GoForward():
     while not rospy.is_shutdown():
 
 	    # publish the velocity
-        if self.safety == 0:
+        if safety == 0:
             self.cmd_vel.publish(move_cmd)
             if (bhit>1):
-                self.safety = 1
-        elif self.safety == 1:
+                safety = 1
+        elif safety == 1:
             self.cmd_vel.publish(move_stop)
             if (bhit==0):
-                self.safety = 2
+                safety = 2
             else:
-                self.safety = 1
-        elif self.safety == 2
+                safety = 1
+        elif safety == 2
             f.sleep() #Stops it for 2 seconds
-            self.safety  = 1
+            safety  = 1
 	    # wait for 0.1 seconds (10 HZ) and publish again
 
     def BumperEventCallback(self,data):
