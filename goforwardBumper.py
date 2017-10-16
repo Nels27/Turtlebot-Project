@@ -21,8 +21,9 @@ from geometry_msgs.msg import Twist
 from kobuki_msgs.msg import BumperEvent
 
 class GoForward():
+    safety ='GoFwd'
     def __init__(self):
-        self.safety = 'GoFwd'
+        self.safety = safety
         # initiliaze
         rospy.init_node('GoForward', anonymous=False)
 
@@ -48,7 +49,7 @@ class GoForward():
 
     move_stop = Twist()
 
-    bhit = ["none","left","right","center"]
+    bhit = ['none','left','right','center']
 	# as long as you haven't ctrl + c keeping doing...
     while not rospy.is_shutdown():
         self.safety = 'GoFwd';
