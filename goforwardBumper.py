@@ -48,28 +48,27 @@ class GoForward():
 
     move_stop = Twist()
 
-safety =
-bhit = ["none","left","right","center"]
+    bhit = ["none","left","right","center"]
 	# as long as you haven't ctrl + c keeping doing...
     while not rospy.is_shutdown():
-        safety = 'GoFwd';
+        self.safety = 'GoFwd';
 	    # publish the velocity
-        if safety == 'GoFwd':
+        if self.safety == 'GoFwd':
             self.cmd_vel.publish(move_cmd)
 
             if (data.state == BumperEvent.PRESSED):
-                safety = 'Wait'
+                self.safety = 'Wait'
 
-        elif safety == 'Wait':
+        elif self.safety == 'Wait':
             self.cmd_vel.publish(move_stop)
             if (data.state == BumperEvent.Release):
-                safety = 'Stop'
+                self.safety = 'Stop'
             else:
-                safety = 'Wait'
+                self.safety = 'Wait'
 
-        elif safety == 'Stop':
+        elif self.safety == 'Stop':
             f.sleep() #Stops it for 2 seconds
-            safety ='GoFwd'
+            self.safety ='GoFwd'
 	    # wait for 0.1 seconds (10 HZ) and publish again
 
     def shutdown(self):
