@@ -21,11 +21,15 @@ from geometry_msgs.msg import Twist
 from kobuki_msgs.msg import BumperEvent
 
 class GoForward():
-    safety ='GoFwd'
+    safety =0
     def __init__(self):
-        self.safety = safety
+
+
+        # GoFwd = 0
+        # Wait = 1
+        # Stop = 2
         # initiliaze
-        rospy.init_node('GoForward', anonymous=False)
+    rospy.init_node('GoForward', anonymous=False)
 
 	# tell user how to stop TurtleBot
 	rospy.loginfo("To stop TurtleBot CTRL + C")
@@ -52,24 +56,24 @@ class GoForward():
     bhit = ['none','left','right','center']
 	# as long as you haven't ctrl + c keeping doing...
     while not rospy.is_shutdown():
-        self.safety = 'GoFwd';
+        self.safety = 0;
 	    # publish the velocity
-        if self.safety == 'GoFwd':
+        if self.safety == 0:
             self.cmd_vel.publish(move_cmd)
 
             if (data.state == BumperEvent.PRESSED):
-                self.safety = 'Wait'
+                self.safety = 1
 
-        elif self.safety == 'Wait':
+        elif self.safety == 1:
             self.cmd_vel.publish(move_stop)
             if (data.state == BumperEvent.Release):
-                self.safety = 'Stop'
+                self.safety = 2
             else:
-                self.safety = 'Wait'
+                self.safety = 1
 
-        elif self.safety == 'Stop':
+        elif self.safety == 2:
             f.sleep() #Stops it for 2 seconds
-            self.safety ='GoFwd'
+            self.safety =0
 	    # wait for 0.1 seconds (10 HZ) and publish again
 
     def shutdown(self):
