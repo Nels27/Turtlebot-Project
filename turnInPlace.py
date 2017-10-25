@@ -16,7 +16,7 @@ class GoForward():
 		rospy.loginfo("To stop TurtleBot CTRL+C")
 		rospy.on_shutdown(self.shutdown)
 		#subscribe to the Odometer
-		rospy.Subscriber('/odom', Odometry, self.ErrorHandle)
+		rospy.Subscriber('/odom', Odometry, self.Turning)
 
 		self.cmd_vel = rospy.Publisher('cmd_vel_mux/input/navi', Twist, queue_size=10)
 		r = rospy.Rate(10);
@@ -29,26 +29,16 @@ class GoForward():
 			self.cmd_vel.publish(turn_cmd)
 
 
-	def ErrorHandle(self,msg):
+	def Turning(self,msg):
 		zdes = cmath.rect(1,0)
 		real = msg.pose.pose.orientation.z
 		imag = msg.pose.pose.orientation.w
 		zcurr = real + imag*1j;
 
-		zerror = zdes/zcurr;
-
-		thetaerror = cmath.phase(zerror);
-		correction  = -1*thetaerror;
+		phase_angle = cmath.phase(zerror);
 
 		turn_cmd = Twist()
 		turn_cmd.linear.x = 0
-
-		if correction > 1.5:
-			turn_cmd.angular.z = 0.7
-		elif correction < -1.5:
-			turn_cmd.angular.z = -0.7
-		else:
-			turn_cmd.angular.z = correction
 
 	def shutdown(self):
 		rospy.loginfo("Stop TurtleBot")
