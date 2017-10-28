@@ -28,8 +28,8 @@ class GoForward():
 			self.cmd_vel.publish(move_cmd)
 			self.cmd_vel.publish(turn_cmd)
 
-
 	def Turning(self,msg):
+        print "Please enter the angle"
 		zdes = cmath.rect(1,0)
 		real = msg.pose.pose.orientation.z
 		imag = msg.pose.pose.orientation.w
