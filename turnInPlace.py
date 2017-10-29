@@ -37,7 +37,8 @@ class GoForward():
         print ("Please enter the angle")
         value = input()
         turninitial_cmd.angular.z = radians(value)
-        rospy.loginfo("This is the value " + value".")
+        rospy.loginfo("This is the value:")
+        print value
 
     def Turning_fix(self,msg):
         zdes = cmath.rect(1, value)
