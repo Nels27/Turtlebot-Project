@@ -10,7 +10,7 @@ roll = pitch = yaw = 0.0
 value = 0
 move_cmd = Twist()
 move_cmd.linear.x = 0
-move_cmd.angular.z = 1W
+move_cmd.angular.z = 1
 
 class GoForward():
 	def __init__(self):
