@@ -20,7 +20,7 @@ class GoForward():
         rospy.init_node('GoForward', anonymous=False)
         rospy.loginfo("To stop TurtleBot CTRL+C")
         rospy.on_shutdown(self.shutdown)
-        #subscribe to the Odometer
+        #subscribe to the Odometer wutg a Turning and Turning Fix class
         rospy.Subscriber('/odom', Odometry, self.Turning)
         rospy.Subscriber('/odom', Odometry, self.Turning_fix)
 
