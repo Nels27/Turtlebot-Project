@@ -10,7 +10,7 @@ roll = pitch = yaw = 0.0
 value = 0
 move_cmd = Twist()
 move_cmd.linear.x = 0
-move_cmd.angular.z = 1
+move_cmd.angular.z = 0 #Removed the initial velocity
 
 class GoForward():
 	def __init__(self):
@@ -25,8 +25,8 @@ class GoForward():
 
 		while not rospy.is_shutdown():
 			self.cmd_vel.publish(move_cmd)
-			r.sleep()		
-			
+			r.sleep()
+
 
 	def ErrorHandle(self,msg):
 		print ("Provide turn angle")
