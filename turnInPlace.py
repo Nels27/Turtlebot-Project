@@ -10,7 +10,7 @@ import cmath
 turninitial_cmd = Twist()
 turninitial_cmd.linear.x = 0
 turninitial_cmd.angular.z = 0
-
+value = 0
 turnfix_cmd = Twist()
 turnfix_cmd.linear.x = 0
 turnfix_cmd.angular.z = 0
@@ -33,7 +33,7 @@ class GoForward():
             r.sleep(5)
 
     def Turning(self,msg):
-        global value
+        #global value
         print ("Please enter the angle")
         value = input()
         turninitial_cmd.angular.z = radians(value)
