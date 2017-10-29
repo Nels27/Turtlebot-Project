@@ -13,14 +13,14 @@ turninitial_cmd.angular.z = 0
 value = 0
 turnfix_cmd = Twist()
 turnfix_cmd.linear.x = 0
-turnfix_cmd.angular.z = 0
+turnfix_cmd.angular.z = 1
 
 class GoForward():
     def __init__(self):
         rospy.init_node('GoForward', anonymous=False)
         rospy.loginfo("To stop TurtleBot CTRL+C")
         rospy.on_shutdown(self.shutdown)
-        #subscribe to the Odometer wutg a Turning and Turning Fix class
+        #subscribe to the Odometer with a Turning and Turning Fix class
         rospy.Subscriber('/odom', Odometry, self.Turning)
         rospy.Subscriber('/odom', Odometry, self.Turning_fix)
 
@@ -42,8 +42,11 @@ class GoForward():
 
     def Turning_fix(self,msg):
         zdes = cmath.rect(1, value)
+        print zdes
         real = msg.pose.pose.orientation.z
         imag = msg.pose.pose.orientation.w
+        print real
+        print imag
         zcurr = real + imag * 1j;
         zerror = zdes / zcurr
         phase_angle = cmath.phase(zerror);
