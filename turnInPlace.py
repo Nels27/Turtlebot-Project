@@ -30,7 +30,7 @@ class GoForward():
         while not rospy.is_shutdown():
             self.cmd_vel.publish(turninitial_cmd)
             self.cmd_vel.publish(turnfix_cmd)
-            r.sleep(5)
+            r.sleep()
 
     def Turning(self,msg):
         #global value
@@ -62,4 +62,5 @@ if __name__ == '__main__':
     try:
         GoForward()
     except:
+        GoForward()
         rospy.loginfo("GoForward node terminated.")
