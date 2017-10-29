@@ -13,7 +13,7 @@ turninitial_cmd.angular.z = 0
 value = 0
 turnfix_cmd = Twist()
 turnfix_cmd.linear.x = 0
-turnfix_cmd.angular.z = 1
+turnfix_cmd.angular.z = 0 #If set to 1 it will turn automatically
 
 class GoForward():
     def __init__(self):
