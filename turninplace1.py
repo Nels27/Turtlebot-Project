@@ -23,9 +23,9 @@ class GoForward():
 		r = rospy.Rate(10)
 
 
-		while not rospy.is_shutdown():
+	#	while not rospy.is_shutdown():
 			self.cmd_vel.publish(move_cmd)
-			r.sleep()
+			#r.sleep()
 
 
 	def ErrorHandle(self,msg):
