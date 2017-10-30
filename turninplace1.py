@@ -31,7 +31,7 @@ class GoForward():
 
 	def ErrorHandle(self,msg):
 		print ("Provide turn angle")
-		value = 1.414 #90 degrees
+		value = 3.1415 #90 degrees
 		move_cmd.angular.z = value
 
 	def shutdown(self):
