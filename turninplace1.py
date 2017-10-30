@@ -10,7 +10,7 @@ roll = pitch = yaw = 0.0
 value = 0
 move_cmd = Twist()
 move_cmd.linear.x = 0
-move_cmd.angular.z = 1
+move_cmd.angular.z = 0 #Setting the initial destination
 
 class GoForward():
 	def __init__(self):
@@ -23,9 +23,10 @@ class GoForward():
 		r = rospy.Rate(10)
 
 
-	#	while not rospy.is_shutdown():
+		for x in range(0,10)
 			self.cmd_vel.publish(move_cmd)
-			#r.sleep()
+			r.sleep()
+
 
 
 	def ErrorHandle(self,msg):
