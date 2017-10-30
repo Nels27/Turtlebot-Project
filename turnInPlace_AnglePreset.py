@@ -35,7 +35,8 @@ class GoForward():
 	def Turning(self,msg): #Sets the desired angle for turning
 		#print ("Please enter the angle")
 		#value = input()
-		global value = 2.356 #135 degrees
+		global value
+		value = 2.356 #135 degrees
 		move_cmd.angular.z = value
 		rospy.loginfor("This is the value: ")
 
