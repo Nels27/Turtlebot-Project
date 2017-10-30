@@ -25,13 +25,13 @@ class GoForward():
 
 		for x in range(0,10):
 			self.cmd_vel.publish(move_cmd)
-			#r.sleep()
+			r.sleep()
 
 
 
 	def ErrorHandle(self,msg):
 		print ("Provide turn angle")
-		value = input()
+		value = 0.707 #45 degrees
 		move_cmd.angular.z = radians(value)
 
 	def shutdown(self):
