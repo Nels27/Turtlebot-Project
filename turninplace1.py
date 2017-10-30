@@ -25,7 +25,7 @@ class GoForward():
 
 		for x in range(0,10):
 			self.cmd_vel.publish(move_cmd)
-			r.sleep()
+			#r.sleep()
 
 
 
