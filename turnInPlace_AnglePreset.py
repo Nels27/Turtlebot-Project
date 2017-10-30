@@ -10,7 +10,7 @@ roll = pitch = yaw = 0.0
 value = 0
 move_cmd = Twist()
 move_cmd.linear.x = 0
-move_cmd.angular.z = 1 #Setting the initial destination
+move_cmd.angular.z = 0 #Setting the initial destination
 
 class GoForward():
 	def __init__(self):
@@ -20,10 +20,10 @@ class GoForward():
 		rospy.Subscriber('/odom', Odometry, self.ErrorHandle)
 
 		self.cmd_vel = rospy.Publisher('cmd_vel_mux/input/navi', Twist, queue_size=10)
-		r = rospy.Rate(10)
+		r = rospy.Rate(5)
 
 
-		while not rospy.is_shutdown():
+		for x in range(0,10):
 			self.cmd_vel.publish(move_cmd)
 			r.sleep()
 
@@ -31,8 +31,8 @@ class GoForward():
 
 	def ErrorHandle(self,msg):
 		print ("Provide turn angle")
-		value = input()
-		move_cmd.angular.z = radians(value)
+		value = 2.356 #90 degrees
+		move_cmd.angular.z = value
 
 	def shutdown(self):
 		rospy.loginfo("Stop TurtleBot")
