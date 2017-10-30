@@ -20,7 +20,7 @@ class GoForward():
 		rospy.Subscriber('/odom', Odometry, self.ErrorHandle)
 
 		self.cmd_vel = rospy.Publisher('cmd_vel_mux/input/navi', Twist, queue_size=10)
-		r = rospy.Rate(10)
+		r = rospy.Rate(20)
 
 
 		for x in range(0,10):
