@@ -23,7 +23,7 @@ class GoForward():
 		r = rospy.Rate(10)
 
 
-		for x in range(0,10)
+		for x in range(0,10):
 			self.cmd_vel.publish(move_cmd)
 			r.sleep()
 
