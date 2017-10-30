@@ -32,7 +32,7 @@ class GoForward():
 	def ErrorHandle(self,msg):
 		print ("Provide turn angle")
 		value = 0.707 #45 degrees
-		move_cmd.angular.z = radians(value)
+		move_cmd.angular.z = value
 
 	def shutdown(self):
 		rospy.loginfo("Stop TurtleBot")
