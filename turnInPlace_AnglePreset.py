@@ -12,12 +12,17 @@ move_cmd = Twist()
 move_cmd.linear.x = 0
 move_cmd.angular.z = 0 #Setting the initial destination
 
+turnAdjustment_cmd = Twist()
+turnAdjustment_cmd.linear.x = 0
+turnAdjustment_cmd.angular.z = 0
+
 class GoForward():
 	def __init__(self):
 		rospy.init_node('GoForward', anonymous=False)
 		rospy.loginfo("To stop TurtleBot CTRL+C")
 		rospy.on_shutdown(self.shutdown)
-		rospy.Subscriber('/odom', Odometry, self.ErrorHandle)
+		rospy.Subscriber('/odom', Odometry, self.Turning)
+		rospy.Subscriber('/odom', Odometry, self.TurningFixed)
 
 		self.cmd_vel = rospy.Publisher('cmd_vel_mux/input/navi', Twist, queue_size=10)
 		r = rospy.Rate(5)
@@ -27,11 +32,28 @@ class GoForward():
 			self.cmd_vel.publish(move_cmd)
 			r.sleep()
 
+	def Turning(self,msg): #Sets the desired angle for turning
+		#print ("Please enter the angle")
+		#value = input()
+		global value = 2.356 #135 degrees
+		move_cmd.angular.z = value
+		rospy.loginfor("This is the value: ")
 
 
-	def ErrorHandle(self,msg):
+	def TurningFixed(self,msg): #Corrects the turning with an error adjustment in real time
 		print ("Provide turn angle")
-		value = 2.356 #90 degrees
+		zdes = cmath.rect(1,value)
+		real = msg.pose.pose.orientation.z
+		imag = msg.pose.pose.orientation.w
+
+		zcurr = real + imag * 1j;
+		zerror = zdes / zcurr
+		phase_angle = cmath.phase(zerror)
+
+		k - 1
+		omega = k * phase_angle;
+		turnAdjustment_cmd = Twist()
+		turnAdjustment_cmd.angular.z = radians(omega)
 		move_cmd.angular.z = value
 
 	def shutdown(self):
