@@ -2,6 +2,7 @@
 import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
+from kobuki_msgs.msg import BumperEvent
 
 
 class Scan_msg:
@@ -12,10 +13,12 @@ class Scan_msg:
         3 integer variables are created to keep track of where obstacles exist.
         3 dictionaries are to keep track of the movement and log messages.'''
         self.pub = rospy.Publisher('/cmd_vel_mux/input/navi', Twist)
+        rospy.Subscriber("/mobile_base/events/bumper", BumperEvent, self.BumperEventCallback)
         self.msg = Twist()
         self.sect_1 = 0
         self.sect_2 = 0
         self.sect_3 = 0
+        self.bhit = 0
         self.ang = {0: 0, 001: -1.2, 10: -1.2, 11: -1.2, 100: 1.5, 101: 1.0, 110: 1.0, 111: 1.2}
         self.fwd = {0: .25, 1: 0, 10: 0, 11: 0, 100: 0.1, 101: 0, 110: 0, 111: 0}
         self.dbgmsg = {0: 'Move forward', 1: 'Veer right', 10: 'Veer right', 11: 'Veer right', 100: 'Veer left',
@@ -26,6 +29,15 @@ class Scan_msg:
         self.sect_1 = 0
         self.sect_2 = 0
         self.sect_3 = 0
+
+    def BumperEventCallback(self,data):
+        if ( data.state == BumperEvent.PRESSED ) :
+            self.bhit = 1
+        elif (data.state == BumperEvent.RELEASED):
+            self.bhit =0
+        else:
+            self.bhit = 0
+
 
     def sort(self, laserscan):
         '''Goes through 'ranges' array in laserscan message and determines
@@ -56,7 +68,12 @@ class Scan_msg:
         self.msg.angular.z = self.ang[sect]
         self.msg.linear.x = self.fwd[sect]
         rospy.loginfo(self.dbgmsg[sect])
-        self.pub.publish(self.msg)
+        if self.bhit == 1:
+            self.msg.angular.z = 0
+            self.msg.linear.x = 0
+            self.pub.publish(self.msg)
+        else:
+            self.pub.publish(self.msg)
 
         self.reset_sect()
 
