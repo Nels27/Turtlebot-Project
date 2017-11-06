@@ -64,19 +64,19 @@ class Scan_msg:
         self.movement(self.sect_1, self.sect_2, self.sect_3)
 
 
-def call_back(scanmsg):
-    sub_obj.for_callback(scanmsg)
-
-
-def listener():
-    rospy.init_node('navigation_sensors')
-    rospy.loginfo("Subscriber Starting")
-    sub = rospy.Subscriber('/scan', LaserScan, call_back)
-    rospy.spin()
+# def call_back(scanmsg):
+#     sub_obj.for_callback(scanmsg)
+#
+#
+# def listener():
+#     rospy.init_node('navigation_sensors')
+#     rospy.loginfo("Subscriber Starting")
+#     sub = rospy.Subscriber('/scan', LaserScan, call_back)
+#     rospy.spin()
 
 
 if __name__ == "__main__":
     '''A Scan_msg class object called sub_obj is created and listener
     function is run'''
     sub_obj = Scan_msg()
-    listener()
+    #listener()
