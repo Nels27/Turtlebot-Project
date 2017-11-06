@@ -16,6 +16,11 @@ class Scan_msg:
         self.fwd = {000: .25, 1: 0, 10: 0, 11: 0, 100: 0.1, 101: 0, 110: 0, 111: 0}
         self.dbgmsg = {0: 'Move forward', 1: 'Veer right', 10: 'Veer right', 11: 'Veer right', 100: 'Veer left',
                        101: 'Veer left', 110: 'Veer left', 111: 'Veer right'}
+        r = rospy.Rate(10)
+
+        while not rospy.is_shutdown():
+            self.pub.publish(self.msg)
+            r.sleep()
 
     def reset_sect(self):
         self.sect_1 = 0
@@ -24,6 +29,7 @@ class Scan_msg:
 
     def sort(self, laserscan):
         entries = len(laserscan.ranges)
+        print(entries)
         for entry in range(0, entries):
             if 0.4 < laserscan.ranges[entry] < 0.75:
                 if (0 < entry < entries / 3):
@@ -62,6 +68,14 @@ class Scan_msg:
     def for_callback(self, laserscan):
         self.sort(laserscan)
         self.movement(self.sect_1, self.sect_2, self.sect_3)
+
+    def shutdown(self):
+        # stop turtlebot
+        rospy.loginfo("Stop TurtleBot")
+    # a default Twist has linear.x of 0 and angular.z of 0.  So it'll stop TurtleBot
+        self.pub.publish(Twist())
+    # sleep just makes sure TurtleBot receives the stop command prior to shutting down the script
+        rospy.sleep(1)
 
 
 # def call_back(scanmsg):
