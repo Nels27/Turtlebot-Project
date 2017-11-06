@@ -55,6 +55,7 @@ class Scan_msg:
         rospy.loginfo(self.dbgmsg[sect])
         self.pub.publish(self.msg)
         print (self.msg.angular.z)
+        print (self.msg.linear.x)
 
         self.reset_sect()
 
