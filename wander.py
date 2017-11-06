@@ -6,6 +6,7 @@ from sensor_msgs.msg import LaserScan
 
 class Scan_msg:
     def __init__(self):
+        rospy.init_node('Scan_msg', anonymous=False)
         self.pub = rospy.Publisher('cmd_vel_mux/input/navi', Twist, queue_size=10)
         rospy.Subscriber('/scan', LaserScan, self.for_callback)
         self.msg = Twist()
