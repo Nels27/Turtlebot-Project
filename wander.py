@@ -3,6 +3,8 @@ import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 from kobuki_msgs.msg import BumperEvent
+from kobuki_msgs.msg import WheelDropEvent
+from kobuki_msgs.msg import CliffEvent
 
 
 class Scan_msg:
@@ -14,11 +16,15 @@ class Scan_msg:
         3 dictionaries are to keep track of the movement and log messages.'''
         self.pub = rospy.Publisher('/cmd_vel_mux/input/navi', Twist)
         rospy.Subscriber("/mobile_base/events/bumper", BumperEvent, self.BumperEventCallback)
+        rospy.Subscriber("/mobile_base/events/wheel_drop", WheelDropEvent, self.WheelEventCallback)
+        rospy.Subscriber("/mobile_base/events/cliff",CliffEvent, self.CliffEventCallback)
         self.msg = Twist()
         self.sect_1 = 0
         self.sect_2 = 0
         self.sect_3 = 0
         self.bhit = 0
+        self.wheelhit = 0
+        self.cliffhit = 0
         self.ang = {0: 0, 001: -1.2, 10: -1.2, 11: -1.2, 100: 1.5, 101: 1.0, 110: 1.0, 111: 1.2}
         self.fwd = {0: .25, 1: 0, 10: 0, 11: 0, 100: 0.1, 101: 0, 110: 0, 111: 0}
         self.dbgmsg = {0: 'Move forward', 1: 'Veer right', 10: 'Veer right', 11: 'Veer right', 100: 'Veer left',
@@ -37,6 +43,24 @@ class Scan_msg:
             self.bhit =0
         else:
             self.bhit = 0
+
+    def WheelEventCallback(self,data):
+        if (data.state == WheelDropEvent.RAISED):
+            self.wheelhit = 1
+        elif (data.state == WheelDropEvent.DROPPED):
+            self.wheelhit = 0
+        else:
+            self.wheelhit = 0
+
+    def CliffEventCallback (self, data):
+        if (data.state == CliffEvent.CLIFF):
+            self.cliffhit = 1
+        elif (data.state == CliffEvent.FLOOR):
+            self.cliffhit = 0
+        else:
+            self.cliffhit = 0
+
+
 
 
     def sort(self, laserscan):
@@ -68,7 +92,7 @@ class Scan_msg:
         self.msg.angular.z = self.ang[sect]
         self.msg.linear.x = self.fwd[sect]
         rospy.loginfo(self.dbgmsg[sect])
-        if self.bhit == 1:
+        if (self.bhit == 1 or self.wheelhit == 1 or self.cliffhit == 1):
             self.msg.angular.z = 0
             self.msg.linear.x = 0
             self.pub.publish(self.msg)
