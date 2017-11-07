@@ -27,10 +27,9 @@ class Scan_msg:
         self.bhit = 0
         self.wheelhit = 0
         self.cliffhit = 0
-        self.ang = {0: 0, 001: -1.2, 10: -1.2, 11: -1.2, 100: 1.5, 101: 1.0, 110: 1.0, 111: 1.2}
-        self.fwd = {0: .25, 1: 0, 10: 0, 11: 0, 100: 0.1, 101: 0, 110: 0, 111: 0}
-        self.dbgmsg = {0: 'Move forward', 1: 'Veer right', 10: 'Veer right', 11: 'Veer right', 100: 'Veer left',
-                       101: 'Veer left', 110: 'Veer left', 111: 'Veer right'}
+        self.ang = {0: 0, 1: -0.5, 10: -1.2, 100: 1.5, 1000: 1.2, 10000: 0.5, 11: -1.2, 110: -1.2, 1100: 1.2, 11000: 1.5, 10001: 0, 111: -1.2, 1110: 1.5, 11100: 1.5, 11001: 1.2, 10011: 0.5, 1111: -1.5, 11110: 1.5, 11101: 0.5, 11011: 0, 10111: -0.5, 11111: 1.7}
+        self.fwd = {0: 0.25, 1: 0, 10: 0, 100: 0, 1000: 0, 10000: 0, 11: 0, 110: 0, 1100: 0, 11000: 0, 10001: 0.25, 111: 0, 1110: 0, 11100: 0, 11001: 0, 10011: 0, 11110: 0, 11101: 0, 11011: 0.25, 10111: 0,1111: 0, 11111: 0}
+        self.dbgmsg = {0: 'Move Forward', 1: 'Veer Right', 10: 'Veer Right', 100: 'Veer Left', 1000: 'Veer Left', 10000: 'Veer Left', 11: 'Veer Right', 110: 'Veer Right', 1100: 'Veer Left', 11000: 'Veer Left', 10001: 'Move Forward', 111: 'Veer Right', 1110: 'Veer Left', 11100: 'Veer Left', 11001: 'Veer Left', 10011: 'Veer Left', 11110: 'Veer Left', 11101: 'Veer Left', 11011: 'Move Forward', 10111: 'Veer Right',1111: 'Veer Right', 11111: 'Veer Right'}
 
     def reset_sect(self):
         '''Resets the below variables before each new scan message is read'''
