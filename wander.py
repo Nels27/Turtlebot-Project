@@ -46,9 +46,9 @@ class Scan_msg:
 
     def WheelEventCallback(self,data):
         if (data.state == WheelDropEvent.RAISED):
-            self.wheelhit = 1
-        elif (data.state == WheelDropEvent.DROPPED):
             self.wheelhit = 0
+        elif (data.state == WheelDropEvent.DROPPED):
+            self.wheelhit = 1
         else:
             self.wheelhit = 0
 
