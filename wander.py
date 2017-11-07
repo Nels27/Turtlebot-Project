@@ -20,12 +20,49 @@ class Scan_msg:
 	self.fwd = {0:.25,1:0,10:0,11:0,100:0.1,101:0,110:0,111:0}
 	self.dbgmsg = {0:'Move forward',1:'Veer right',10:'Veer right',11:'Veer right',100:'Veer left',101:'Veer left',110:'Veer left',111:'Veer right'}
 
+    move_cmd = Twist()
+    move_cmd.linear = 0.2
+    move_cmd.angular = 0
+
 
     def reset_sect(self):
 	'''Resets the below variables before each new scan message is read'''
 	self.sect_1 = 0
 	self.sect_2 = 0
 	self.sect_3 = 0
+    self.sect_4 = 0
+    self.sect_5 = 0
+
+
+    #Each zone is defined by 72 degrees
+
+    #0-71
+    #72-144
+    #145-216
+    #217-288
+    #289-359
+
+    # Have it prioritize between the two regions by taking the first one.
+
+    #Move forward initially and as soon as it detects and object stop and scan
+
+    #Take current odometer value right when it detects an object to keep track (Store it)
+
+    #Take in laserscan 1 value
+
+    #Turn 72 degrees and add it to the odometer value (Use correction if necessary)
+
+    #Take in laserscan 2 value
+
+    #Repeat until you've done all 5
+
+    #Stop in zone 5 , compare values, and then return to earliest max space in the sector (least value)
+
+    #Turn to desired zone--> Move forward --> Set all values back to zero.
+
+    #Make class to subscribe to the laserscan for continuous
+    #Make second class to subscribe to the laserscan for the sporadic one
+    #def
 
     def sort(self, laserscan):
 	'''Goes through 'ranges' array in laserscan message and determines
