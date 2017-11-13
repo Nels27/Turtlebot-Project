@@ -35,9 +35,9 @@ class turtlebot_openCV():
         self.image_sub = rospy.Subscriber("input_rgb_image", Image, self.image_callback, queue_size=1)
         self.depth_sub = rospy.Subscriber("input_depth_image", Image, self.depth_callback, queue_size=1)
 
-        rospy.loginfo("Waiting for image topics...")
-        rospy.wait_for_message("input_rgb_image", Image)
-        rospy.loginfo("Ready.")
+        #rospy.loginfo("Waiting for image topics...")
+        #rospy.wait_for_message("input_rgb_image", Image)
+        #rospy.loginfo("Ready.")
 
     def image_callback(self, data):
         # Use cv_bridge() to convert the ROS image to OpenCV format
@@ -55,12 +55,12 @@ class turtlebot_openCV():
         cv2.imshow(self.node_name, processed_image)
 
         # Process any keyboard commands
-        self.keystroke = cv2.waitKey(5)
-        if self.keystroke != -1:
-            cc = chr(self.keystroke & 255).lower()
-            if cc == 'q':
-                # The user has press the q key, so exit
-                rospy.signal_shutdown("User hit q key to quit.")
+        #self.keystroke = cv2.waitKey(5)
+        #if self.keystroke != -1:
+        #    cc = chr(self.keystroke & 255).lower()
+        #    if cc == 'q':
+        #        # The user has press the q key, so exit
+        #        rospy.signal_shutdown("User hit q key to quit.")
 
     def depth_callback(self, ros_image):
         # Use cv_bridge() to convert the ROS image to OpenCV format
