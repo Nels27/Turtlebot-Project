@@ -54,7 +54,7 @@ class image_converter:
         depth_display_image = self.process_depth_image(depth_array)
 
         # Display the result
-        cv2.imshow("Depth Image", depth_display_image)
+        cv2.imshow("Depth Image Scanner", depth_display_image)
 
   def process_depth_image(self, frame):
         # Just return the raw image
