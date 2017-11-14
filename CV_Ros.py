@@ -17,7 +17,7 @@ class image_converter:
     self.image_pub = rospy.Publisher("image_topic_2",Image)
 
     self.bridge = CvBridge()
-    self.image_sub = rospy.Subscriber("image_topic",Image,self.image_callback)
+    self.image_sub = rospy.Subscriber("input_rgb_image",Image,self.image_callback)
     self.depth_sub = rospy.Subscriber("input_depth_image", Image, self.depth_callback)
 
   def image_callback(self,data):
@@ -55,6 +55,11 @@ class image_converter:
 
         # Display the result
         cv2.imshow("Depth Image Scanner", depth_display_image)
+
+        try:
+           self.image_pub.publish(self.bridge.cv2_to_imgmsg(depth_image, "bgr8"))
+        except CvBridgeError as e:
+           print(e)
 
   def process_depth_image(self, frame):
         # Just return the raw image
