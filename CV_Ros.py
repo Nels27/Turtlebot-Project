@@ -17,8 +17,8 @@ class image_converter:
     self.image_pub = rospy.Publisher("image_topic_2",Image)
 
     self.bridge = CvBridge()
-    self.image_sub = rospy.Subscriber("input_rgb_image",Image,self.image_callback)
-    self.depth_sub = rospy.Subscriber("input_depth_image", Image, self.depth_callback)
+    self.image_sub = rospy.Subscriber("/camera/rgb/image_raw",Image,self.image_callback)
+    self.depth_sub = rospy.Subscriber("/camera/depth_registered/image_raw", Image, self.depth_callback)
 
   def image_callback(self,data):
     # Use cv_bridge() to convert the ROS image to OpenCV format
