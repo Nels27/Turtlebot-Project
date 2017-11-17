@@ -15,13 +15,9 @@ class turtlebot_openCV():
 
         rospy.init_node(self.node_name)
 
-        # What we do during shutdown
-        rospy.on_shutdown(self.cleanup)
-
         # Create the OpenCV display window for the RGB image
-        self.cv_window_name = self.node_name
-        cv.NamedWindow(self.cv_window_name, cv.CV_WINDOW_NORMAL)
-        cv.MoveWindow(self.cv_window_name, 25, 75)
+        cv.NamedWindow("Color Image", cv.CV_WINDOW_NORMAL)
+        cv.MoveWindow("Color Image", 25, 75)
 
         # And one for the depth image
         cv.NamedWindow("Depth Image", cv.CV_WINDOW_NORMAL)
@@ -35,9 +31,6 @@ class turtlebot_openCV():
         self.image_sub = rospy.Subscriber("input_rgb_image", Image, self.image_callback, queue_size=1)
         self.depth_sub = rospy.Subscriber("input_depth_image", Image, self.depth_callback, queue_size=1)
 
-        rospy.loginfo("Waiting for image topics...")
-        rospy.wait_for_message("input_rgb_image", Image)
-        rospy.loginfo("Ready.")
 
     def image_callback(self, data):
         # Use cv_bridge() to convert the ROS image to OpenCV format
@@ -47,20 +40,8 @@ class turtlebot_openCV():
         # Process the image to detect and track objects or features
         processed_image = self.process_image(frame)
 
-        # If the result is a greyscale image, convert to 3-channel for display purposes """
-        # if processed_image.channels == 1:
-        # cv.CvtColor(processed_image, self.processed_image, cv.CV_GRAY2BGR)
-
         # Display the image.
         cv2.imshow(self.node_name, processed_image)
-
-        # Process any keyboard commands
-        self.keystroke = cv2.waitKey(5)
-        if self.keystroke != -1:
-            cc = chr(self.keystroke & 255).lower()
-            if cc == 'q':
-                # The user has press the q key, so exit
-                rospy.signal_shutdown("User hit q key to quit.")
 
     def depth_callback(self, ros_image):
         # Use cv_bridge() to convert the ROS image to OpenCV format
@@ -105,24 +86,19 @@ class turtlebot_openCV():
             print(e)
 
     def process_depth_image(self, frame):
-        # Just return the raw image for this demo
+        # Just return the raw image
         return frame
 
     def process_image(self, frame):
         return frame
-
-    def cleanup(self):
-        print("Shutting down vision node.")
-        cv2.destroyAllWindows()
-
 
 def main(args):
     try:
         turtlebot_openCV()
         rospy.spin()
     except KeyboardInterrupt:
-        print("Shutting down vision node.")
-        cv.DestroyAllWindows()
+        print("Shutting down")
+        cv2.DestroyAllWindows()
 
 
 if __name__ == '__main__':
