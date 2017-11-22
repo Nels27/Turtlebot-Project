@@ -75,7 +75,7 @@ def run():
 
             # send the message and delay
         pub.publish(twist)
-    blob_position = 0
+        blob_position = 0
         rospy.sleep(0.1)
 
 if __name__ == '__main__':
