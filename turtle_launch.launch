@@ -1,0 +1,4 @@
+<launch>
+    < command="roslaunch turtlebot_bringup minimal.launch" />
+    < command="roslaunch turtlebot_bringup 3dsensor.launch" />
+</launch
