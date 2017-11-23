@@ -31,8 +31,9 @@ class Follower:
 
                 image = self.bridge.imgmsg_to_cv2(msg,desired_encoding='bgr8')
                 hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-                lower_yellow = numpy.array([ 1, 0, 176])
-                upper_yellow = numpy.array([123, 123, 252])
+                #this actually for orange
+                lower_yellow = numpy.array([ 0, 100, 100])
+                upper_yellow = numpy.array([20, 255, 255])
                 mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
 
                 h, w, d = image.shape
@@ -49,7 +50,7 @@ class Follower:
 #The proportional controller is implemented in the following four lines which
 #is reposible of linear scaling of an error to drive the control output.
                         err = cx - w/2
-                        self.twist.linear.x = 0.2
+                        self.twist.linear.x = 0
                         self.twist.angular.z = -float(err) / 100
                         self.cmd_vel_pub.publish(self.twist)
                 cv2.imshow("window", image)
