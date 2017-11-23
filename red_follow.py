@@ -50,7 +50,8 @@ class Follower:
 #The proportional controller is implemented in the following four lines which
 #is reposible of linear scaling of an error to drive the control output.
                         err = cx - w/2
-                        self.twist.linear.x = 0
+                        foward_err = cy - h/2
+                        self.twist.linear.x = -float(foward_err)/100
                         self.twist.angular.z = -float(err) / 100
                         self.cmd_vel_pub.publish(self.twist)
                 cv2.imshow("window", image)
