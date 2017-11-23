@@ -37,10 +37,10 @@ class Follower:
                 mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
 
                 h, w, d = image.shape
-                search_top = 3*h/4
-                search_bot = 3*h/4 + 20
-                mask[0:search_top, 0:w] = 0
-                mask[search_bot:h, 0:w] = 0
+                #search_top = 3*h/4
+                #search_bot = 3*h/4 + 20
+                #mask[0:search_top, 0:w] = 0
+                #mask[search_bot:h, 0:w] = 0
 
                 M = cv2.moments(mask)
                 if M['m00'] > 0:
