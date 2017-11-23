@@ -51,7 +51,8 @@ class Follower:
 #is reposible of linear scaling of an error to drive the control output.
                         err = cx - w/2
                         foward_err = cy - h/2
-                        print (foward_err)
+                        print("Height Error",foward_err)
+                        print("Side Error", err)
                         self.twist.linear.x = 0
                         self.twist.angular.z = -float(err) / 100
                         self.cmd_vel_pub.publish(self.twist)
