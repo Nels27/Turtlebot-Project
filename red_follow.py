@@ -54,7 +54,8 @@ class Follower:
                         print("Height Error",foward_err)
                         print("Side Error", err)
                         self.twist.linear.x = 0
-                        self.twist.angular.z = -float(err) / 100
+                        self.twist.angular.z = 0
+                        #self.twist.angular.z = -float(err) / 100
                         self.cmd_vel_pub.publish(self.twist)
                 cv2.imshow("window", image)
                 cv2.waitKey(3)
