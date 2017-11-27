@@ -51,8 +51,8 @@ class Follower:
                         print("m10",M['m10'])
                         print("m01",M['m01'])
                         limitaion = int(M['m00'])
-                        #print (limitaion)
-                        if (limitaion < 99999):
+                        print (limitaion)
+                        if (limitaion < 999999):
                                 self.twist.angular.z = 0
                                 self.twist.angular.x = 0
                         else:
