@@ -32,15 +32,11 @@ class Follower:
                 image = self.bridge.imgmsg_to_cv2(msg,desired_encoding='bgr8')
                 hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
                 #this actually for orange
-                lower_yellow = numpy.array([ 0, 100, 100])
-                upper_yellow = numpy.array([20, 255, 255])
-                mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
+                lower_orange = numpy.array([0, 100, 100])
+                upper_orange = numpy.array([20, 255, 255])
+                mask = cv2.inRange(hsv, lower_orange, upper_orange)
 
                 h, w, d = image.shape
-                #search_top = 3*h/4
-                #search_bot = 3*h/4 + 20
-                #mask[0:search_top, 0:w] = 0
-                #mask[search_bot:h, 0:w] = 0
 
                 M = cv2.moments(mask)
                 if M['m00'] > 0:
@@ -51,14 +47,16 @@ class Follower:
 #is reposible of linear scaling of an error to drive the control output.
                         err = cx - w/2
                         foward_err = cy - h/2
-                        print("m00",M['m00'])
-                        print("m10",M['m10'])
-                        print("m01",M['m01'])
-                        self.twist.linear.x = 0
+                        #print("m00",M['m00'])
+                        #print("m10",M['m10'])
+                        #print("m01",M['m01'])
                         if (M['m00'] < 99999):
                                 self.twist.angular.z = 0
+                                self.twist.angular.x = 0
                         else:
                                 self.twist.angular.z = -float(err)/100
+                                self.twist.linear.x = -float(foward_err)/200
+
                         self.cmd_vel_pub.publish(self.twist)
                 cv2.imshow("window", image)
                 cv2.waitKey(3)
