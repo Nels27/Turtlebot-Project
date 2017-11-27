@@ -47,17 +47,17 @@ class Follower:
 #is reposible of linear scaling of an error to drive the control output.
                         err = cx - w/2
                         foward_err = cy - h/2
-                        #print("m00",M['m00'])
-                        #print("m10",M['m10'])
-                        #print("m01",M['m01'])
+                        print("m00",M['m00'])
+                        print("m10",M['m10'])
+                        print("m01",M['m01'])
                         limitaion = int(M['m00'])
-                        print (limitaion)
+                        #print (limitaion)
                         if (limitaion < 99999):
                                 self.twist.angular.z = 0
                                 self.twist.angular.x = 0
                         else:
                                 self.twist.angular.z = -float(err)/100
-                                self.twist.linear.x = -float(foward_err)/2000
+                                self.twist.linear.x = -float(foward_err)/1000
 
                         self.cmd_vel_pub.publish(self.twist)
                 cv2.imshow("window", image)
