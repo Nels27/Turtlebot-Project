@@ -54,7 +54,7 @@ class Follower:
                         print (limitaion)
                         if (limitaion < 999999):
                                 self.twist.angular.z = 0
-                                self.twist.angular.x = 0
+                                self.twist.linear.x = 0
                         else:
                                 self.twist.angular.z = -float(err)/100
                                 self.twist.linear.x = -float(foward_err)/500
