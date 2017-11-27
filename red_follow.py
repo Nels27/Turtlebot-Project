@@ -50,12 +50,14 @@ class Follower:
                         #print("m00",M['m00'])
                         #print("m10",M['m10'])
                         #print("m01",M['m01'])
-                        if (M['m00'] < 99999):
+                        limitaion = int(M['m00'])
+                        print (limitaion)
+                        if (limitaion < 99999):
                                 self.twist.angular.z = 0
                                 self.twist.angular.x = 0
                         else:
                                 self.twist.angular.z = -float(err)/100
-                                self.twist.linear.x = -float(foward_err)/200
+                                self.twist.linear.x = -float(foward_err)/2000
 
                         self.cmd_vel_pub.publish(self.twist)
                 cv2.imshow("window", image)
