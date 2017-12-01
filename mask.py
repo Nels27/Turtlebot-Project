@@ -39,7 +39,7 @@ def find_red(image_message):
             cv2.circle(image, (centroid_x, centroid_y), 7, (255, 255, 255), -1)
             cv2.putText(image, "center", (centroid_x - 20, centroid_y - 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
-        cv2.imshow("Red Object Found", image)  # show the image
+        cv2.imshow("Red Object Found", mask)  # show the image
         cv2.waitKey(1)  # refresh contents of image frame
 
 if __name__ == "__main__":
