@@ -16,7 +16,7 @@ class Follower:
                 cv2.namedWindow("window", 1)
 
                 self.image_sub = rospy.Subscriber('camera/rgb/image_raw',Image, self.image_callback)
-                self.depth_sub = rospy.Subscriber('/camera/depth_registered/image_raw', Image, self.depth_callback)
+                self.depth_sub = rospy.Subscriber('camera/depth_registered/image_raw', Image, self.depth_callback)
                 self.cmd_vel_pub = rospy.Publisher('cmd_vel_mux/input/teleop',Twist, queue_size=1)
 
                 self.twist = Twist()
