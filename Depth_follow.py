@@ -156,6 +156,8 @@ class ObjectTracker():
         max_x = min_x + self.roi.width
         min_y = self.roi.y_offset
         max_y = min_y + self.roi.height
+        print(max_x)
+        print(max_y)
 
         # Get the average depth value over the ROI
         for x in range(min_x, max_x):
