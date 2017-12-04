@@ -80,14 +80,14 @@ class ObjectTracker():
         rospy.wait_for_message('depth_image', Image)
 
         # Subscribe to the depth image
-        rospy.Subscriber("depth_image", Image, self.convert_depth_image)
+        rospy.Subscriber("/camera/depth_registered/image_raw", Image, self.convert_depth_image)
 
         # Wait for the camera_info topic to become available
         rospy.loginfo("Waiting for camera_info topic...")
         rospy.wait_for_message('camera_info', CameraInfo)
 
         # Subscribe to the camera_info topic to get the image width and height
-        rospy.Subscriber('camera_info', CameraInfo, self.get_camera_info)
+        rospy.Subscriber("/camera/ir/camera_info", CameraInfo, self.get_camera_info)
 
         # Wait until we actually have the camera data
         while self.image_width == 0 or self.image_height == 0:
